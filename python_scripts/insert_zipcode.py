@@ -48,7 +48,7 @@ query = "SELECT * from facebook"
 with mydb.cursor() as cursor:
     cursor.execute(query)
     row_entry = cursor.fetchone()
-    while row_entry is not None and row_entry[2] is not None:
+    while row_entry is not None:
         update_zip(row_entry, config["MYSQL_TABLE_NAME"])
         row_entry = cursor.fetchone()
         print(row_entry)
