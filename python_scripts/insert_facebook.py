@@ -69,7 +69,12 @@ def insert_into_table(table_name, schema, mydb):
                     str(values) + ' ' + str(dup) + ' ' + str(complete_update)
                 # cursor.execute(
                 #     f'{insert_head} {cols} {values} {dup} {complete_update}')
-                cursor.execute(comm)
+                try:
+                    cursor.execute(comm)
+                except:
+                    print(comm)
+                    sys.exit()
+
             mydb.commit()
 
 
