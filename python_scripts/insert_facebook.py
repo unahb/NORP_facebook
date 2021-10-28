@@ -7,6 +7,7 @@ import geopy
 from geopy.extra.rate_limiter import RateLimiter
 import time
 from dotenv import dotenv_values
+import future_fstrings
 
 config = dotenv_values(".env")
 
