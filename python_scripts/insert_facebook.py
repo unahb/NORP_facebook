@@ -19,6 +19,7 @@ facebook_data_schema = ['LATITUDE', 'LONGITUDE', 'ZIP', 'UNDER_FIVE',
 
 def insert_into_table(table_name, schema, mydb):
     # insert_head = 'INSERT INTO {} (' + ')'
+    counter_val = 0
 
     for file in filenames:
         insert_head = 'INSERT INTO ' + str(table_name)
@@ -70,13 +71,11 @@ def insert_into_table(table_name, schema, mydb):
                     str(values) + ' ' + str(dup) + ' ' + str(complete_update)
                 # cursor.execute(
                 #     f'{insert_head} {cols} {values} {dup} {complete_update}')
-                try:
-                    cursor.execute(comm)
-                except:
+                cursor.execute(comm)
+                mydb.commit()
+                if (counter_val % 100 == 0):
                     print(comm)
-                    sys.exit()
-
-            mydb.commit()
+                counter_val = counter_val + 1
 
 
 if __name__ == '__main__':
