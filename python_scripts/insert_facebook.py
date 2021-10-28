@@ -7,7 +7,6 @@ import geopy
 from geopy.extra.rate_limiter import RateLimiter
 import time
 from dotenv import dotenv_values
-import future_fstrings
 
 config = dotenv_values('.env')
 
@@ -21,31 +20,31 @@ def insert_into_table(table_name, schema, mydb):
     # insert_head = 'INSERT INTO {} (' + ')'
 
     for file in filenames:
-        insert_head = f'INSERT INTO {table_name}'
-        cols = f'(LATITUDE, LONGITUDE, '
-        update = f''
+        insert_head = 'INSERT INTO ' + str(table_name)
+        cols = '(LATITUDE, LONGITUDE, '
+        update = ''
         if 'USA_children_under_five' in file:
-            cols += f'UNDER_FIVE'
-            update += f'UNDER_FIVE'
+            cols += 'UNDER_FIVE'
+            update += 'UNDER_FIVE'
         if 'USA_elderly_60_plus' in file:
-            cols += f'SIXTY_MORE'
-            update += f'SIXTY_MORE'
+            cols += 'SIXTY_MORE'
+            update += 'SIXTY_MORE'
         if 'USA_youth_15_24' in file:
-            cols += f'YOUTH_15_24'
-            update += f'YOUTH_15_24'
+            cols += 'YOUTH_15_24'
+            update += 'YOUTH_15_24'
         if 'USA_men' in file:
-            cols += f'MEN'
-            update += f'MEN'
+            cols += 'MEN'
+            update += 'MEN'
         if 'USA_women.' in file:
-            cols += f'WOMEN'
-            update += f'WOMEN'
+            cols += 'WOMEN'
+            update += 'WOMEN'
         if 'USA_women_of' in file:
-            cols += f'WOMEN_15_49'
-            update += f'WOMEN_15_49'
+            cols += 'WOMEN_15_49'
+            update += 'WOMEN_15_49'
         if 'population_usa' in file:
-            cols += f'POPULATION'
-            update += f'POPULATION'
-        cols += f')'
+            cols += 'POPULATION'
+            update += 'POPULATION'
+        cols += ')'
         update += ' = '
 
         print('data/'+file)
@@ -54,16 +53,23 @@ def insert_into_table(table_name, schema, mydb):
         for col in df.columns:
             df[col] = df[col].astype(float)
         for index, item in df.iterrows():
-            values = f'VALUES ({item[0]:.8f}, {item[1]:.8f}, {item[2]:.8f})'
-            dup = f'ON DUPLICATE KEY UPDATE'
-            val_update = f'{item[2]};'
-            complete_update = f'{update}{val_update}'
+            values = 'VALUES (' + str(float("{:.8f}".format(item[0]))) + ',' + str(float(
+                "{:.8f}".format(item[1]))) + ',' + str(float("{:.8f}".format(item[2]))) + ')'
+
+            # values = f'VALUES ({item[0]:.8f}, {item[1]:.8f}, {item[2]:.8f})'
+            dup = 'ON DUPLICATE KEY UPDATE'
+            val_update = str(item[2]) + ';'
+            complete_update = str(update) + ' ' + str(val_update)
 
             # print(f'{insert_head} {cols} {values} {dup} {complete_update}')
+            # print(complete_update)
 
             with mydb.cursor() as cursor:
-                cursor.execute(
-                    f'{insert_head} {cols} {values} {dup} {complete_update}')
+                comm = str(insert_head) + ' ' + str(cols) + ' ' + \
+                    str(values) + ' ' + str(dup) + ' ' + str(complete_update)
+                # cursor.execute(
+                #     f'{insert_head} {cols} {values} {dup} {complete_update}')
+                cursor.execute(comm)
             mydb.commit()
 
 
