@@ -35,7 +35,7 @@ def insert_into_table(table_name, schema, mydb):
         if 'USA_men' in file:
             cols += 'MEN'
             update += 'MEN'
-        if 'USA_women.' in file:
+        if 'USA_women_2020' in file:
             cols += 'WOMEN'
             update += 'WOMEN'
         if 'USA_women_of' in file:
