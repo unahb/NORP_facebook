@@ -72,10 +72,7 @@ def insert_into_table(table_name, schema, mydb):
                 # cursor.execute(
                 #     f'{insert_head} {cols} {values} {dup} {complete_update}')
                 cursor.execute(comm)
-                mydb.commit()
-                if (counter_val % 100 == 0):
-                    print(comm)
-                counter_val = counter_val + 1
+        mydb.commit()
 
 
 if __name__ == '__main__':
