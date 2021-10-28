@@ -1,5 +1,5 @@
 import csv
-import MySQLdb
+import pymysql.cursors
 from tqdm import tqdm
 from os import error, walk
 import pandas as pd
@@ -38,7 +38,7 @@ geolocator = geopy.geocoders.Bing(
 geocode = RateLimiter(geolocator.reverse, min_delay_seconds=1)
 
 
-mydb = MySQLdb.connect(host=config["MYSQL_HOST"],
+mydb = pymysql.connect(host=config["MYSQL_HOST"],
                        user=config["MYSQL_USER"],
                        password=config["MYSQL_PASSWORD"],
                        db=config["MYSQL_DB_NAME"])

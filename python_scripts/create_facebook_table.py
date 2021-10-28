@@ -2,7 +2,7 @@
 
 import sys
 import csv
-import MySQLdb
+import pymysql.cursors
 
 
 def create_table(sql_file, mydb):
@@ -14,7 +14,7 @@ def create_table(sql_file, mydb):
 
 if __name__ == '__main__':
 
-    mydb = MySQLdb.connect(host=config["MYSQL_HOST"],
+    mydb = pymysql.connect(host=config["MYSQL_HOST"],
                            user=config["MYSQL_USER"],
                            password=config["MYSQL_PASSWORD"],
                            db=config["MYSQL_DB_NAME"])
