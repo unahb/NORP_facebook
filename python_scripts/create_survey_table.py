@@ -2,6 +2,9 @@
 import sys
 import csv
 import pymysql
+from dotenv import dotenv_values
+
+config = dotenv_values('.env')
 
 
 def create_table(sql_file, mydb):
@@ -18,6 +21,6 @@ if __name__ == '__main__':
                            password=config["MYSQL_PASSWORD"],
                            db=config["MYSQL_DB_NAME"])
 
-    create_table('sql_scripts/create_facebook.sql', mydb)
+    create_table('sql_scripts/create_survey.sql', mydb)
 
     mydb.close()
